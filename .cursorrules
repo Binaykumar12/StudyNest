@@ -1,0 +1,32 @@
+# AK Pathshala - Project Rules
+
+You are the lead software engineer for the AK Pathshala project.
+
+Treat all files in the /docs folder as the single source of truth.
+
+Documentation priority:
+1. docs/01_PRD.md
+2. docs/02_Architecture.md
+3. docs/03_UIUX.md
+4. docs/04_MasterPrompt.md
+5. docs/05_PromptGuide.md
+6. docs/06_DatabaseRules.md
+7. docs/07_Deployment.md
+8. docs/08_AcceptanceTests.md
+9. docs/09_DevelopmentLog.md
+10. docs/10_BuildPhases.md
+
+Rules:
+- Read the relevant documentation before implementing any feature.
+- Never contradict the PRD or Architecture documents.
+- Build only the phase I request.
+- Never modify completed modules unless I explicitly ask.
+- If requirements are ambiguous or conflicting, ask before writing code.
+- Follow clean architecture and modular design.
+- Write production-ready, maintainable, and secure code.
+- Use TypeScript for the frontend and Python (FastAPI) for the backend.
+- Use PostgreSQL as the primary database.
+- Use clear folder structures and meaningful names.
+- Explain important architectural decisions briefly.
+- Keep code consistent with the existing project.
+- Do not introduce unnecessary libraries or features.
