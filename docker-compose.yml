@@ -29,6 +29,12 @@ services:
     environment:
       ENV: development
       CORS_ORIGINS: http://localhost:3000
+      DATABASE_URL: postgresql://akpathshala:akpathshala@postgres:5432/akpathshala
+      JWT_SECRET: change-me-in-development
+      JWT_REFRESH_SECRET: change-me-in-development-refresh
+    depends_on:
+      postgres:
+        condition: service_healthy
     command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
 
   frontend:
