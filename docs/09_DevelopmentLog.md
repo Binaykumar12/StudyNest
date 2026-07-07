@@ -22,15 +22,19 @@ Update after each sprint. Keep short. Paste to AI tools for context.
 ## Sprint 1
 
 **Done**
-- [ ] Auth completed
-- [ ] Database completed
-- [ ] Admin upload completed
+- [x] Phase 1 backend authentication completed (register/login/logout/refresh, JWT cookies)
+- [x] Phase 1 role middleware completed (`get_current_user`, `get_current_admin`, `get_current_student`)
+- [x] Phase 1 frontend authentication completed:
+- [x] Login page (`/login`) with validation, loading, API error handling
+- [x] Register page (`/register`) with validation and password confirmation
+- [x] Protected route system for `/dashboard` (Next.js middleware + auth wrapper)
+- [x] Dashboard page (`/dashboard`) with authenticated user info and logout
 
 **Known Issues**
-- 
+- None in Phase 1 scope
 
 **Next Sprint**
-- 
+- Start Phase 2 (Admin Panel: CDC upload + extraction pipeline)
 
 ---
 

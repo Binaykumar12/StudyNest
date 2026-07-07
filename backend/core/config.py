@@ -21,6 +21,14 @@ class Settings(BaseSettings):
     access_token_cookie: str = "access_token"
     refresh_token_cookie: str = "refresh_token"
 
+    supabase_url: str = ""
+    supabase_service_key: str = ""
+    supabase_bucket_cdc_documents: str = "cdc-documents"
+
+    max_pdf_upload_size_mb: int = 30
+    extraction_text_threshold_chars_per_page: int = 50
+    ocr_confidence_threshold: float = 0.6
+
     @property
     def cors_origin_list(self) -> list[str]:
         return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]

@@ -36,8 +36,15 @@ def _set_auth_cookies(response: Response, access_token: str, refresh_token: str)
 
 
 def _clear_auth_cookies(response: Response) -> None:
-    response.delete_cookie(key=settings.access_token_cookie, path="/")
-    response.delete_cookie(key=settings.refresh_token_cookie, path="/")
+    """Delete auth cookies with matching attributes from set_cookie."""
+    cookie_kwargs: dict = {
+        "httponly": True,
+        "secure": settings.cookie_secure,
+        "samesite": "lax",
+        "path": "/",
+    }
+    response.delete_cookie(key=settings.access_token_cookie, **cookie_kwargs)
+    response.delete_cookie(key=settings.refresh_token_cookie, **cookie_kwargs)
 
 
 def _auth_response(response: Response, user, message: str) -> AuthResponse:

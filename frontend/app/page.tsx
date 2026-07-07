@@ -1,4 +1,5 @@
 import { HealthStatus } from "@/components/HealthStatus";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -15,6 +16,22 @@ export default function HomePage() {
             Nepal CDC AI-Powered Learning Platform for Class 9 students and
             teachers.
           </p>
+
+          <div className="mb-8 flex flex-wrap gap-3">
+            <Link
+              href="/login"
+              className="rounded-lg bg-primary px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-primary-dark"
+            >
+              Login
+            </Link>
+            <Link
+              href="/register"
+              className="rounded-lg border border-neutral-300 bg-white px-4 py-2.5 text-sm font-semibold text-neutral-800 transition hover:bg-neutral-100"
+            >
+              Register
+            </Link>
+          </div>
+
           <HealthStatus />
         </div>
       </div>
