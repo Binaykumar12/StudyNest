@@ -24,6 +24,7 @@ class ExtractedSpecGridEntry:
 class ExtractionResult:
     chapters: list[ExtractedChapter]
     specification_grid_entries: list[ExtractedSpecGridEntry]
+    document_texts: dict[str, str]
 
 
 class ExtractionService(ABC):

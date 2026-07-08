@@ -45,12 +45,10 @@ class DocumentPipelineService:
 
         try:
             raw_documents: dict[str, bytes] = {}
-            extracted_text_by_type: dict[str, str] = {}
 
             for document in documents:
                 raw_pdf = self.storage.download_file(document.file_url)
                 raw_documents[document.type.value] = raw_pdf
-                extracted_text_by_type[document.type.value] = ""
 
             extraction_result = self.extractor.extract_from_pdfs(raw_documents)
 
@@ -103,8 +101,9 @@ class DocumentPipelineService:
                 db.add(entry)
 
             for document in documents:
-                text = extracted_text_by_type.get(document.type.value, "")
-                document.extracted_text = text
+                document.extracted_text = extraction_result.document_texts.get(
+                    document.type.value, ""
+                )
                 document.status = CDCDocumentStatus.PROCESSED
 
             db.commit()

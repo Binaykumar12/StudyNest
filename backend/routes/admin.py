@@ -34,6 +34,7 @@ from schemas.admin import (
     ChapterMergeRequest,
     ChapterReviewResponse,
     DocumentUploadResponse,
+    DocumentStatusResponse,
     ProcessDocumentsRequest,
     ProcessDocumentsResponse,
     SubjectCreateRequest,
@@ -215,6 +216,49 @@ def list_documents_endpoint(
 ) -> list[DocumentUploadResponse]:
     documents = list_documents(db, subject_id=subject_id)
     return [DocumentUploadResponse.model_validate(document) for document in documents]
+
+
+@router.get("/documents/status", response_model=DocumentStatusResponse)
+def document_status_endpoint(
+    subject_id: UUID = Query(...),
+    db: Session = Depends(get_db),
+    _: User = Depends(get_current_admin),
+) -> DocumentStatusResponse:
+    documents = list_documents(db, subject_id=subject_id)
+    status_counts = {
+        CDCDocumentStatus.UPLOADED: 0,
+        CDCDocumentStatus.PROCESSING: 0,
+        CDCDocumentStatus.PROCESSED: 0,
+        CDCDocumentStatus.FAILED: 0,
+    }
+
+    for document in documents:
+        status_counts[document.status] += 1
+
+    required_types = {
+        CDCDocumentType.CURRICULUM,
+        CDCDocumentType.TEXTBOOK,
+        CDCDocumentType.TEACHER_GUIDE,
+        CDCDocumentType.SPEC_GRID,
+    }
+    uploaded_types = {document.type for document in documents}
+    missing_document_types = sorted(
+        required_types - uploaded_types,
+        key=lambda item: item.value,
+    )
+
+    return DocumentStatusResponse(
+        subject_id=subject_id,
+        total_documents=len(documents),
+        uploaded_documents=status_counts[CDCDocumentStatus.UPLOADED],
+        processing_documents=status_counts[CDCDocumentStatus.PROCESSING],
+        processed_documents=status_counts[CDCDocumentStatus.PROCESSED],
+        failed_documents=status_counts[CDCDocumentStatus.FAILED],
+        ready_to_process=not missing_document_types,
+        missing_document_types=missing_document_types,
+        documents=[DocumentUploadResponse.model_validate(
+            document) for document in documents],
+    )
 
 
 @router.post("/documents/process", response_model=ProcessDocumentsResponse)

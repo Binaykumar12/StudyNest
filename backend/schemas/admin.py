@@ -46,6 +46,18 @@ class DocumentUploadResponse(BaseModel):
     model_config = {"from_attributes": True}
 
 
+class DocumentStatusResponse(BaseModel):
+    subject_id: UUID
+    total_documents: int
+    uploaded_documents: int
+    processing_documents: int
+    processed_documents: int
+    failed_documents: int
+    ready_to_process: bool
+    missing_document_types: list[CDCDocumentType]
+    documents: list[DocumentUploadResponse]
+
+
 class ProcessDocumentsRequest(BaseModel):
     subject_id: UUID
 

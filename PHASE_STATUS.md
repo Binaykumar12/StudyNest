@@ -10,11 +10,11 @@ Last updated: July 7, 2026
 
 
 
-**Phase 1 — Database Schema & Authentication** — **COMPLETE**
+**Phase 2 — Admin Panel: CDC Upload + Extraction Pipeline** — **IN PROGRESS**
 
 
 
-Database schema complete. Backend authentication (endpoints, bcrypt, JWT cookies, role middleware) complete. Frontend authentication (login/register, protected dashboard, logout) complete.
+Phase 1 is complete. Phase 2 backend/admin wiring is implemented, including document upload, document status, processing, chapter review, approval, and the admin UI shell/pages. Final validation is still being confirmed in this local environment.
 
 
 
@@ -152,7 +152,13 @@ Database schema complete. Backend authentication (endpoints, bcrypt, JWT cookies
 
 
 
-_Not started._
+- [x] Admin subject/class CRUD endpoints
+- [x] Document upload endpoint and storage wiring
+- [x] Document status endpoint for Processing Status page
+- [x] Background extraction pipeline persists extracted text, chapters, and spec grid rows
+- [x] Chapter review, merge, delete, and approval endpoints
+- [x] Admin frontend pages for Overview, Subjects, Upload, Status, Review, and Analytics
+- [ ] Final runtime validation in this local environment
 
 
 

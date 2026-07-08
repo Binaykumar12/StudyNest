@@ -5,6 +5,11 @@ export interface HealthResponse {
   service: string;
 }
 
+export interface SchoolClass {
+  id: string;
+  name: string;
+}
+
 export type UserRole = "student" | "admin";
 
 export interface AuthUser {
@@ -40,6 +45,18 @@ export interface AdminDocument {
   file_url: string;
   status: DocumentStatus;
   created_at: string;
+}
+
+export interface DocumentStatusSummary {
+  subject_id: string;
+  total_documents: number;
+  uploaded_documents: number;
+  processing_documents: number;
+  processed_documents: number;
+  failed_documents: number;
+  ready_to_process: boolean;
+  missing_document_types: DocumentType[];
+  documents: AdminDocument[];
 }
 
 export interface ChapterReview {
@@ -182,6 +199,17 @@ export async function listSubjects(): Promise<Subject[]> {
   return apiRequest<Subject[]>("/admin/subjects", { method: "GET" });
 }
 
+export async function createClass(name: string): Promise<SchoolClass> {
+  return apiRequest<SchoolClass>('/admin/classes', {
+    method: 'POST',
+    body: JSON.stringify({ name }),
+  });
+}
+
+export async function listClasses(): Promise<SchoolClass[]> {
+  return apiRequest<SchoolClass[]>('/admin/classes', { method: 'GET' });
+}
+
 export async function updateSubject(subjectId: string, name: string): Promise<Subject> {
   return apiRequest<Subject>(`/admin/subjects/${subjectId}`, {
     method: "PUT",
@@ -217,6 +245,12 @@ export async function processSubjectDocuments(subjectId: string): Promise<{ mess
   return apiRequest<{ message: string }>("/admin/documents/process", {
     method: "POST",
     body: JSON.stringify({ subject_id: subjectId }),
+  });
+}
+
+export async function fetchDocumentStatus(subjectId: string): Promise<DocumentStatusSummary> {
+  return apiRequest<DocumentStatusSummary>(`/admin/documents/status?subject_id=${encodeURIComponent(subjectId)}`, {
+    method: 'GET',
   });
 }
 

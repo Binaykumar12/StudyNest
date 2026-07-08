@@ -55,6 +55,13 @@ class RuleBasedExtractionService(ExtractionService):
         spec_grid_pages = self._extract_pages_text(
             documents.get("spec_grid", b""))
 
+        document_texts = {
+            "textbook": self._join_page_texts(textbook_pages),
+            "teacher_guide": self._join_page_texts(teacher_pages),
+            "curriculum": self._join_page_texts(curriculum_pages),
+            "spec_grid": self._join_page_texts(spec_grid_pages),
+        }
+
         chapter_titles = self._detect_chapters(textbook_pages)
         learning_outcomes = self._extract_learning_outcomes(curriculum_pages)
         exercises = self._extract_exercises(textbook_pages)
@@ -90,7 +97,11 @@ class RuleBasedExtractionService(ExtractionService):
 
         spec_entries = self._extract_spec_grid_entries(spec_grid_pages)
 
-        return ExtractionResult(chapters=chapters, specification_grid_entries=spec_entries)
+        return ExtractionResult(
+            chapters=chapters,
+            specification_grid_entries=spec_entries,
+            document_texts=document_texts,
+        )
 
     def gemini_extract(self, _: str) -> dict:
         return {
@@ -116,6 +127,11 @@ class RuleBasedExtractionService(ExtractionService):
                 page_results.append((page_index, text, blocks))
 
         return page_results
+
+    def _join_page_texts(self, pages: list[tuple[int, str, list[dict]]]) -> str:
+        return "\n\n".join(
+            page_text.strip() for _, page_text, _ in pages if page_text.strip()
+        )
 
     def _should_run_ocr(self, text: str) -> bool:
         if not text:

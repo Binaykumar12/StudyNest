@@ -41,13 +41,17 @@ Update after each sprint. Keep short. Paste to AI tools for context.
 ## Sprint 2
 
 **Done**
-- 
+- Phase 2 admin APIs resumed and completed for the CDC workflow
+- Document status endpoint added for processing progress tracking
+- Extraction pipeline now persists extracted text and structured chapter/spec data
+- Admin UI routes added for overview, subjects, upload, processing status, review, and analytics
 
 **Known Issues**
-- 
+- Backend regression test environment is missing the active interpreter dependencies for the current shell session
+- Frontend build verification was started, but the final completion signal was not captured in this session
 
 **Next Sprint**
-- 
+- Close out Phase 2 validation and fix any environment-specific issues if they surface
 
 ---
 
